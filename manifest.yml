@@ -1,0 +1,4 @@
+---
+applications:
+- name: directory-prototype
+  buildpack: https://github.com/cloudfoundry/ruby-buildpack.git
