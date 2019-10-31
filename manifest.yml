@@ -2,3 +2,6 @@
 applications:
 - name: directory-prototype
   buildpack: https://github.com/cloudfoundry/ruby-buildpack.git
+  command: bundle exec rails db:migrate && bundle exec rails s
+  services:
+   - directory-db
