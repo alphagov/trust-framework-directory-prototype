@@ -11,6 +11,7 @@ class Ssa
   def generate
     payload = "#{Base64.encode64(jwt_header.to_s.strip)}.#{Base64.encode64(jwt_claims.to_s.strip)}"
     signature = encode(payload.encode("ASCII"))
+    Key.create(jwk_id: jwk_id, public_key: rsa_public)
     "#{payload}.#{signature}"
   end
 
@@ -27,33 +28,41 @@ private
 
   def jwt_claims
     {
-      "org_jwks_endpoint": "https://directory.cloudapps.digital/jwks",
+      "org_jwks_endpoint": jwk_uri,
       "software_mode": "TEST",
       "software_redirect_uris": [
-        "http://example.com/redirect"
+        "http://localhost:3000/redirect"
       ],
       "org_status": "Active",
       "software_client_id": ssa_id,
       "iss": "Trust Framework",
       "software_tos_uri": "http://trust-framework.gov.uk/terms.html",
       "software_client_description": name,
-      "software_jwks_endpoint": "https://directory.cloudapps.digital/jwk_uri",
+      "software_jwks_endpoint": "https://localhost:3000/jwk_uri",
       "software_policy_uri": "http://trust-framework.gov.uk/policy.html",
       "software_id": SecureRandom.uuid,
       "org_contacts": [],
-      "ob_registry_tos": "https://directory.cloudapps.digital/tos/",
+      "ob_registry_tos": "https://localhost:3000/tos/",
       "org_id": SecureRandom.uuid,
-      "software_logo_uri": "http://directory.cloudapps.digital/logo.jpg",
-      "software_jwks_revoked_endpoint": "https://directory.cloudapps.digital/revoke",
+      "software_logo_uri": "http://localhost:3000/logo.jpg",
+      "software_jwks_revoked_endpoint": jwk_uri,
       "software_roles": [
         "AISP",
         "PISP"
       ],
       "exp": Time.now.utc.to_i + 4 * 3600,
       "org_name": name,
-      "org_jwks_revoked_endpoint": "TODO",
+      "org_jwks_revoked_endpoint": "https://localhost:3000/revoke",
       "iat": Time.now.utc.to_i,
       "jti": SecureRandom.uuid
     }
+  end
+
+  def jwk_uri
+    @_jwk_uri ||= "https://localhost:3000/jwk_uri/#{jwk_id}"
+  end
+
+  def jwk_id
+    @_jwk_id ||= SecureRandom.uuid
   end
 end

@@ -4,6 +4,8 @@ class SsaController < ApplicationController
   end
 
   def generate
-    render json: { jws: Ssa.new(name: params[:name], ssa_id: params[:ssa_id]).generate }
+    ssa = Ssa.new(name: params[:name], ssa_id: params[:ssa_id]).generate
+    ## save something about the ssa to a jwk_uri
+    render plain: ssa
   end
 end

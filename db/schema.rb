@@ -10,6 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2019_10_30_161031) do
+
+  create_table "csr_pems", force: :cascade do |t|
+    t.integer "third_party_id"
+    t.string "client_id"
+    t.string "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["third_party_id"], name: "index_csr_pems_on_third_party_id"
+  end
+
+  create_table "keys", force: :cascade do |t|
+    t.string "jwk_id"
+    t.string "public_key"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "third_parties", force: :cascade do |t|
+    t.string "client_id"
+    t.string "access_token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
 end
