@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   post '/client_csr', to: 'csr#register'
 
+  get '/jwk_public_cert/:client_id', to: 'csr#get_csr_public_key'
+
   post '/token', to: 'token#make_token'
 
   get '/endpoint', to: 'endpoint#return_uris'
