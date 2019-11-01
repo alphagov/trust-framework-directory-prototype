@@ -4,9 +4,7 @@ class TokenController < ApplicationController
   include JwtAud
 
   def make_token
-    payload = "#{Base64.encode64(jwt_header.to_s.strip)}.#{Base64.encode64(jwt_claims.to_s.strip)}"
-    signature = encode(payload.encode("ASCII"))
-    access_token = "#{payload}.#{signature}".gsub("\n","")
+    access_token = encode(jwt_claims)
     ThirdParty.where(client_id: params[:client_id]).first.tap do |third_party|
       third_party.access_token = access_token
       third_party.save!
