@@ -1,9 +1,5 @@
 class OnboardController < ApplicationController
-
   def confirm
-
-    render json: { hello: 'world' }
-
+    render json: { welcome: 'to The Future' }
   end
-
 end

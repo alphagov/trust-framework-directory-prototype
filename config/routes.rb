@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   post '/token', to: 'token#make_token'
 
-  get '/endpoint', to: 'endpoint#return_uris'
+  get '/authorization_servers', to: 'authorization_servers#return_uris'
 
   post '/onboard', to: 'onboard#confirm'
 
