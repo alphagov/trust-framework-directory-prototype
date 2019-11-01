@@ -9,10 +9,8 @@ class Ssa
   end
 
   def generate
-    payload = "#{Base64.encode64(jwt_header.to_s.strip)}.#{Base64.encode64(jwt_claims.to_s.strip)}"
-    signature = encode(payload.encode("ASCII"))
     Key.create(jwk_id: jwk_id, public_key: rsa_public)
-    "#{payload}.#{signature}"
+    encode(jwt_claims)
   end
 
 private
