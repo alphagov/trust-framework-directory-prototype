@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   get '/jwk_public_cert/:client_id', to: 'csr#get_csr_public_key'
 
+  get '/signed_certificate/:client_id', to: 'csr#signed_certificate'
+
   post '/token', to: 'token#make_token'
 
   get '/authorization_servers', to: 'authorization_servers#return_uris'

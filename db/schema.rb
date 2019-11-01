@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_30_161031) do
+ActiveRecord::Schema.define(version: 2019_11_01_161117) do
 
   create_table "csr_pems", force: :cascade do |t|
     t.integer "third_party_id"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2019_10_30_161031) do
     t.string "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "signed_certificate"
     t.index ["third_party_id"], name: "index_csr_pems_on_third_party_id"
   end
 
