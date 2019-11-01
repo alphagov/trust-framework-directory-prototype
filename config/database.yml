@@ -24,7 +24,4 @@ test:
 production:
   <<: *default
   adapter: postgresql
-  database: <%= JSON.parse(ENV['VCAP_SERVICES'])['postgres'].first['credentials']['name'] %>
-  host: <%= JSON.parse(ENV['VCAP_SERVICES'])['postgres'].first['credentials']['uri'] %>
-  username: <%= JSON.parse(ENV['VCAP_SERVICES'])['postgres'].first['credentials']['username'] %>
-  password: <%= JSON.parse(ENV['VCAP_SERVICES'])['postgres'].first['credentials']['password'] %>
+  url: <%= ENV['DATABASE_URL'] %>
