@@ -6,6 +6,10 @@ class AuthorizationServersController < ApplicationController
             {
               'CustomerFriendlyName': friendly_name,
               'BaseApiDNSUri': File.join(server_uri, 'onboard')
+            },
+            {
+              'CustomerFriendlyName': 'Stub OIDC OP',
+              'BaseApiDNSUri': File.join('https://stub-oidc-op.cloudapps.digital', 'register')
             }
           ]
         }
