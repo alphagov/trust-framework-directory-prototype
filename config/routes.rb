@@ -7,8 +7,6 @@ Rails.application.routes.draw do
 
   post '/client_csr', to: 'csr#register'
 
-  get '/jwk_public_cert/:client_id', to: 'csr#get_csr_public_key'
-
   get '/signed_certificate/:client_id', to: 'csr#signed_certificate'
 
   post '/token', to: 'token#make_token'
@@ -17,5 +15,7 @@ Rails.application.routes.draw do
 
   post '/onboard', to: 'onboard#confirm'
 
-  get '/jwk_uri/:key_id', to: 'jwk_uri#get_key'
+  get '/jwk-uri/organisation/:name', to: 'jwk_uri#get_org_public_key'
+
+  get '/jwk-uri/software/:ssa_id', to: 'jwk_uri#get_software_public_key'
 end

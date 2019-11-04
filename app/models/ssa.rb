@@ -10,7 +10,7 @@ class Ssa
   end
 
   def generate
-    Key.create(jwk_id: jwk_id, public_key: rsa_public.to_s)
+    Key.create(jwk_id: ssa_id, public_key: rsa_public.to_s)
     encode(jwt_claims, jwt_header)
   end
 
@@ -34,18 +34,18 @@ private
       "jti": SecureRandom.uuid,
       "org_id": SecureRandom.uuid,
       "org_contacts": [],
-      "org_jwks_endpoint": jwk_uri,
-      "org_jwks_revoked_endpoint": "#{base_url}/revoke",
+      "org_jwks_endpoint": org_jwks_uri,
+      "org_jwks_revoked_endpoint": org_revoke_uri,
       "org_name": name,
       "org_status": "Active",
       "software_client_id": ssa_id,
       "software_tos_uri": "http://trust-framework.gov.uk/terms.html",
       "software_client_description": name,
-      "software_jwks_endpoint": "#{base_url}/jwk_uri",
       "software_mode": "TEST",
       "software_policy_uri": "http://trust-framework.gov.uk/policy.html",
-      "software_id": SecureRandom.uuid,
-      "software_jwks_revoked_endpoint": jwk_uri,
+      "software_id": ssa_id,
+      "software_jwks_endpoint": software_uri,
+      "software_jwks_revoked_endpoint": software_revoke_uri,
       "software_logo_uri": "#{base_url}/logo.jpg",
       "software_redirect_uris": [
         "#{base_url}/redirect"
@@ -58,11 +58,19 @@ private
     }
   end
 
-  def jwk_uri
-    @_jwk_uri ||= "#{base_url}/jwk_uri/#{jwk_id}"
+  def org_jwks_uri
+    File.join(base_url, 'jwk-uri', 'organisation', name)
   end
 
-  def jwk_id
-    @_jwk_id ||= SecureRandom.uuid
+  def org_revoke_uri
+    File.join(base_url, 'revoke', 'organisation', name)
+  end
+
+  def software_uri
+    File.join(base_url, 'jwk-uri', 'software', ssa_id)
+  end
+
+  def software_revoke_uri
+    File.join(base_url, 'revoke', 'software', ssa_id)
   end
 end
