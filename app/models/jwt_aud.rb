@@ -15,8 +15,8 @@ module JwtAud
     }.merge({ "v#{type[0].downcase}": payload.without(:id) }) # remove ID is JTI takes its' place
   end
 
-  def encode(unencoded_payload)
-    JWT.encode(unencoded_payload, rsa_private, "RS256")
+  def encode(unencoded_payload, header_fields = {})
+    JWT.encode(unencoded_payload, rsa_private, "RS256", header_fields)
   end
 
   def decode(encoded_payload)

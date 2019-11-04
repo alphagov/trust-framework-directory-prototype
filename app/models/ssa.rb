@@ -10,7 +10,7 @@ class Ssa
 
   def generate
     Key.create(jwk_id: jwk_id, public_key: rsa_public.to_s)
-    encode(jwt_claims)
+    encode(jwt_claims, jwt_header)
   end
 
 private
