@@ -3,9 +3,10 @@ require 'time'
 class Ssa
   include JwtAud
 
-  def initialize(name:, ssa_id:)
+  def initialize(name:, ssa_id:, base_url:)
     @name = name
     @ssa_id = ssa_id
+    @base_url = base_url
   end
 
   def generate
@@ -15,7 +16,7 @@ class Ssa
 
 private
 
-  attr_reader :name, :ssa_id
+  attr_reader :base_url, :name, :ssa_id
 
   def jwt_header
     {
@@ -34,31 +35,31 @@ private
       "org_id": SecureRandom.uuid,
       "org_contacts": [],
       "org_jwks_endpoint": jwk_uri,
-      "org_jwks_revoked_endpoint": "https://localhost:3000/revoke",
+      "org_jwks_revoked_endpoint": "#{base_url}/revoke",
       "org_name": name,
       "org_status": "Active",
       "software_client_id": ssa_id,
       "software_tos_uri": "http://trust-framework.gov.uk/terms.html",
       "software_client_description": name,
-      "software_jwks_endpoint": "https://localhost:3000/jwk_uri",
+      "software_jwks_endpoint": "#{base_url}/jwk_uri",
       "software_mode": "TEST",
       "software_policy_uri": "http://trust-framework.gov.uk/policy.html",
       "software_id": SecureRandom.uuid,
       "software_jwks_revoked_endpoint": jwk_uri,
-      "software_logo_uri": "http://localhost:3000/logo.jpg",
+      "software_logo_uri": "#{base_url}/logo.jpg",
       "software_redirect_uris": [
-        "http://localhost:3000/redirect"
+        "#{base_url}/redirect"
       ],
       "software_roles": [
         "AISP",
         "PISP"
       ],
-      "ob_registry_tos": "https://localhost:3000/tos/",
+      "ob_registry_tos": "#{base_url}/tos",
     }
   end
 
   def jwk_uri
-    @_jwk_uri ||= "https://localhost:3000/jwk_uri/#{jwk_id}"
+    @_jwk_uri ||= "#{base_url}/jwk_uri/#{jwk_id}"
   end
 
   def jwk_id
