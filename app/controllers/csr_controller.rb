@@ -10,11 +10,11 @@ class CsrController < ApplicationController
       third_party_id: third_party.id,
       signed_certificate: pki.sign(cert).to_text
     )
-    render json: { ok: 'go' }
+    render json: { "ok": "go" }
   end
 
-  def signed_certificate
+  def mtls_and_signing_certificate
     csr = CsrPem.where(client_id: params[:client_id]).first
-    render plain: csr.signed_certificate
+    render json: { "certificate": csr.signed_certificate }
   end
 end

@@ -5,9 +5,9 @@ Rails.application.routes.draw do
 
   get '/generate/tpp/:name/ssa/:ssa_id', to: 'ssa#generate'
 
-  post '/client_csr', to: 'csr#register'
+  post '/client-csr', to: 'csr#register'
 
-  get '/signed_certificate/:client_id', to: 'csr#signed_certificate'
+  get '/certificate/:client_id', to: 'csr#mtls_and_signing_certificate'
 
   post '/token', to: 'token#make_token'
 
