@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_01_161117) do
+ActiveRecord::Schema.define(version: 2019_11_05_180430) do
 
   create_table "csr_pems", force: :cascade do |t|
     t.integer "third_party_id"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 2019_11_01_161117) do
     t.string "access_token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "revoked", default: false, null: false
   end
 
 end
