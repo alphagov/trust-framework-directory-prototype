@@ -28,7 +28,7 @@ private
 
   def jwt_claims
     {
-      "iss": "Trust Framework",
+      "iss": base_url,
       "exp": Time.now.utc.to_i + 4 * 3600,
       "iat": Time.now.utc.to_i,
       "jti": SecureRandom.uuid,

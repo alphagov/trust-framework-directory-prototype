@@ -24,9 +24,9 @@ private
 
   def jwt_claims
     {
-      "iss": "did:gov:#{SecureRandom.uuid}",  # issuer
+      "iss": request.base_url,  # issuer
       "jti": SecureRandom.uuid,  # JWT ID
-      "aud": "https://open-sesame.service.gov.uk",  # audience
+      "aud": params[:client_id],  # audience
       "nbf": Time.now.utc.to_i - 3600,  # not before
       "iat": Time.now.utc.to_i,  # issued at
       "exp": Time.now.utc.to_i + 4 * 3600,  # expiration
