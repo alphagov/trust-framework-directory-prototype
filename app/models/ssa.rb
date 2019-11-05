@@ -62,15 +62,15 @@ private
     File.join(base_url, 'jwk-uri', 'organisation', name)
   end
 
-  def org_revoke_uri
-    File.join(base_url, 'revoke', 'organisation', name)
+  def org_revoked_uri
+    File.join(base_url, 'revoked', 'organisation', name)
   end
 
   def software_uri
     File.join(base_url, 'jwk-uri', 'software', ssa_id)
   end
 
-  def software_revoke_uri
-    File.join(base_url, 'revoke', 'software', ssa_id)
+  def software_revoked_uri
+    File.join(base_url, 'revoked', 'software', ssa_id)
   end
 end

@@ -6,10 +6,10 @@ class SsaController < ApplicationController
   end
 
   def generate
-    third_party = ThirdParty.where(client_id: params[:name]).first
+    organisation = Organisation.find_by_organisation_id(params[:name])
 
     ## in real life we would validate this properly!!!
-    if third_party.access_token == access_token
+    if organisation.access_token == access_token
       ssa = Ssa.new(
         name: params[:name],
         ssa_id: params[:ssa_id],

@@ -1,3 +1,3 @@
 class CsrPem < ApplicationRecord
-  belongs_to :third_party, optional: true
+  belongs_to :organisation, optional: true
 end

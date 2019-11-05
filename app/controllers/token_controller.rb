@@ -5,9 +5,9 @@ class TokenController < ApplicationController
 
   def make_token
     access_token = encode(jwt_claims, jwt_header)
-    ThirdParty.where(client_id: params[:client_id]).first.tap do |third_party|
-      third_party.access_token = access_token
-      third_party.save!
+    Organisation.find_by_organisation_id(params[:client_id]).tap do |org|
+      org.access_token = access_token
+      org.save!
     end
     render json: { "access_token": access_token }
   end
