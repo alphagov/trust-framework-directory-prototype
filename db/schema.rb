@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_05_182927) do
+ActiveRecord::Schema.define(version: 2019_11_05_191953) do
 
   create_table "csr_pems", force: :cascade do |t|
     t.string "value"
@@ -35,6 +35,16 @@ ActiveRecord::Schema.define(version: 2019_11_05_182927) do
     t.boolean "revoked", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "ssas", force: :cascade do |t|
+    t.integer "organisation_id"
+    t.string "ssa_id"
+    t.string "statement"
+    t.boolean "revoked", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organisation_id"], name: "index_ssas_on_organisation_id"
   end
 
 end

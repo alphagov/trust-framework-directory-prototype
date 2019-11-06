@@ -10,15 +10,11 @@ class SsaController < ApplicationController
 
     ## in real life we would validate this properly!!!
     if organisation.access_token == access_token
-      ssa = Ssa.new(
-        name: params[:name],
-        ssa_id: params[:ssa_id],
-        base_url: request.base_url
-      ).generate
+      ssa = Ssa.create(organisation_id: organisation.id, ssa_id: params[:ssa_id])
+      ssa.statement = ssa.generate
+      ssa.save!
 
-      ## TO DO
-      ## save something about the ssa to a jwk_uri
-      render plain: ssa
+      render plain: ssa.statement
     else
       render plain: 'Nope'
     end

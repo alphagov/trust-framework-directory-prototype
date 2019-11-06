@@ -1,6 +1,6 @@
 class JwkUriController < ApplicationController
   def get_org_public_key
-    csr = CsrPem.where(client_id: params[:name]).first
+    csr = Organisation.find_by_organisation_id(params[:name]).csr_pem.first
     render plain: OpenSSL::X509::Request.new(csr.value).public_key.to_pem
   end
 

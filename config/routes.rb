@@ -18,4 +18,8 @@ Rails.application.routes.draw do
   get '/jwk-uri/organisation/:name', to: 'jwk_uri#get_org_public_key'
 
   get '/jwk-uri/software/:ssa_id', to: 'jwk_uri#get_software_public_key'
+
+  get '/revoked/organisation/:name', to: 'revoked#revoked_organisation'
+
+  get '/revoked/software/:ssa_id', to: 'revoked#revoked_software'
 end

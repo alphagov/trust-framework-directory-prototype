@@ -1,13 +1,9 @@
 require 'time'
 
-class Ssa
-  include JwtAud
+class Ssa < ApplicationRecord
+  belongs_to :organisation, optional: true
 
-  def initialize(name:, ssa_id:, base_url:)
-    @name = name
-    @ssa_id = ssa_id
-    @base_url = base_url
-  end
+  include JwtAud
 
   def generate
     Key.create(jwk_id: ssa_id, public_key: rsa_public.to_s)
@@ -15,8 +11,6 @@ class Ssa
   end
 
 private
-
-  attr_reader :base_url, :name, :ssa_id
 
   def jwt_header
     {
@@ -32,20 +26,20 @@ private
       "exp": Time.now.utc.to_i + 4 * 3600,
       "iat": Time.now.utc.to_i,
       "jti": SecureRandom.uuid,
-      "org_id": SecureRandom.uuid,
+      "org_id": organisation.organisation_id,
       "org_contacts": [],
       "org_jwks_endpoint": org_jwks_uri,
-      "org_jwks_revoked_endpoint": org_revoke_uri,
-      "org_name": name,
+      "org_jwks_revoked_endpoint": org_revoked_uri,
+      "org_name": organisation.organisation_id,
       "org_status": "Active",
       "software_client_id": ssa_id,
       "software_tos_uri": "http://trust-framework.gov.uk/terms.html",
-      "software_client_description": name,
+      "software_client_description": organisation.organisation_id,
       "software_mode": "TEST",
       "software_policy_uri": "http://trust-framework.gov.uk/policy.html",
       "software_id": ssa_id,
       "software_jwks_endpoint": software_uri,
-      "software_jwks_revoked_endpoint": software_revoke_uri,
+      "software_jwks_revoked_endpoint": software_revoked_uri,
       "software_logo_uri": "#{base_url}/logo.jpg",
       "software_redirect_uris": [
         "#{base_url}/redirect"
@@ -59,11 +53,11 @@ private
   end
 
   def org_jwks_uri
-    File.join(base_url, 'jwk-uri', 'organisation', name)
+    File.join(base_url, 'jwk-uri', 'organisation', organisation.organisation_id)
   end
 
   def org_revoked_uri
-    File.join(base_url, 'revoked', 'organisation', name)
+    File.join(base_url, 'revoked', 'organisation', organisation.organisation_id)
   end
 
   def software_uri
@@ -72,5 +66,9 @@ private
 
   def software_revoked_uri
     File.join(base_url, 'revoked', 'software', ssa_id)
+  end
+
+  def base_url
+    @_base_url ||= Rails.application.config.base_url
   end
 end
