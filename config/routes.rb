@@ -3,15 +3,15 @@ Rails.application.routes.draw do
 
   root 'ssa#index'
 
-  get '/generate/tpp/:name/ssa/:ssa_id', to: 'ssa#generate'
-
   post '/client-csr', to: 'csr#register'
 
   get '/certificate/:client_id', to: 'csr#mtls_and_signing_certificate'
 
   post '/token', to: 'token#make_token'
 
-  get '/authorization_servers', to: 'authorization_servers#return_uris'
+  get '/generate/organisation/:name/ssa/:ssa_id', to: 'ssa#generate'
+
+  get '/authorization-servers', to: 'authorization_servers#return_uris'
 
   post '/onboard', to: 'onboard#confirm'
 

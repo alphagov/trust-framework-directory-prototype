@@ -30,14 +30,19 @@ private
       "org_contacts": [],
       "org_jwks_endpoint": org_jwks_uri,
       "org_jwks_revoked_endpoint": org_revoked_uri,
-      "org_name": organisation.organisation_id,
+      "org_name": SecureRandom.alphanumeric,
       "org_status": "Active",
+      "organisation_competent_authority_claims": "Authorisations granted to the organsiation by an NCA",
       "software_client_id": ssa_id,
       "software_tos_uri": "http://trust-framework.gov.uk/terms.html",
       "software_client_description": organisation.organisation_id,
-      "software_mode": "TEST",
+      "software_client_name": SecureRandom.alphanumeric,
+      "software_client_uri": "The website or resource root uri",
+      "software_version": "0.0.1",
+      "software_environment": "production",
+      "software_mode": "Live",
       "software_policy_uri": "http://trust-framework.gov.uk/policy.html",
-      "software_id": ssa_id,
+      "software_id": SecureRandom.uuid,
       "software_jwks_endpoint": software_uri,
       "software_jwks_revoked_endpoint": software_revoked_uri,
       "software_logo_uri": "#{base_url}/logo.jpg",
@@ -48,7 +53,7 @@ private
         "AISP",
         "PISP"
       ],
-      "ob_registry_tos": "#{base_url}/tos",
+      "trust_framework_registry_tos": "#{base_url}/tos",
     }
   end
 
