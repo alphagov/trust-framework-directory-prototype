@@ -15,7 +15,7 @@ private
   def jwt_header
     {
       "typ": "JWT",
-      "kid": SecureRandom.uuid,
+      "kid": OpenSSL::Digest::SHA1.new(rsa_public.to_der).to_s,
       "alg": "RS256"
     }
   end
