@@ -78,8 +78,8 @@ class Pki
   end
 
   def generate_signed_rsa_cert_and_key(**args)
-    cert, key = *generate_rsa_cert_and_key(args)
-    [self.sign(cert), key]
+    cert, public_key, private_key = *generate_rsa_cert_and_key(args)
+    [self.sign(cert), public_key, private_key]
   end
 
   def revoke(certificate)
@@ -95,8 +95,8 @@ class Pki
   end
 
   def generate_rsa_cert_and_key(expires_in: 1.year, size: 2048, cn: "GENERATED TEST CERTIFICATE", digest: nil)
-    key = OpenSSL::PKey::RSA.new size
-    generate_cert_using_key(key.public_key, expires_in, cn)
+    key = OpenSSL::PKey::RSA.generate(size)
+    generate_cert_using_key(key, expires_in, cn)
   end
 
   def generate_ec_cert_and_key(expires_in: 1.year, size: 2048, cn: "GENERATED TEST CERTIFICATE")
@@ -107,13 +107,13 @@ class Pki
     generate_cert_using_key(key, expires_in, cn)
   end
 
-  def generate_cert_using_key(public_key, expires_in, cn)
+  def generate_cert_using_key(key, expires_in, cn)
     cert = OpenSSL::X509::Certificate.new
     cert.version = 2
     cert.subject = OpenSSL::X509::Name.parse "/DC=org/DC=TEST/CN=#{cn}"
-    cert.public_key = public_key
+    cert.public_key = key.public_key
     cert.not_before = Time.now - 5.years
     cert.not_after = Time.now + expires_in
-    [cert, public_key]
+    [cert, key.public_key, key]
   end
 end

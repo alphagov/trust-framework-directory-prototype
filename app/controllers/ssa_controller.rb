@@ -6,7 +6,7 @@ class SsaController < ApplicationController
   end
 
   def generate
-    organisation = Organisation.find_by_organisation_id(params[:name])
+    organisation = Organisation.find_by_organisation_id(params[:organisation_id])
 
     ## in real life we would validate this properly!!!
     if organisation.access_token == access_token
@@ -16,9 +16,29 @@ class SsaController < ApplicationController
 
       render plain: ssa.statement
     else
-      render plain: 'Nope'
+      render plain: 'Access token invalid'
     end
   end
+
+  def get_ssa
+    ssa = Ssa.find_by_ssa_id(params[:ssa_id])
+    render plain: ssa.statement
+  end
+
+  def get_certificates
+    org = Organisation.find_by_organisation_id(params[:organisation_id])
+    certs = org.ssa_certificates(params[:ssa_id])
+    render json: {
+      "signing": certs.where(usage: 'signing').first.signed_certificate,
+      "transport": certs.where(usage: 'transport').first.signed_certificate
+    }
+  end
+
+  def ssa_signing_public_key
+    render plain: Key.find_by_jwk_id(params[:ssa_id]).public_key
+  end
+
+private
 
   def access_token
     header = request.headers['Authorization']
