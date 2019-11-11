@@ -24,7 +24,7 @@ private
 
   def jwt_claims
     {
-      "iss": request.base_url,  # issuer
+      "iss": Rails.application.config.base_url,  # issuer
       "jti": SecureRandom.uuid,  # JWT ID
       "aud": params[:client_id],  # audience
       "nbf": Time.now.utc.to_i - 3600,  # not before

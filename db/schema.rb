@@ -10,15 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_05_191953) do
+ActiveRecord::Schema.define(version: 2019_11_08_111932) do
 
-  create_table "csr_pems", force: :cascade do |t|
-    t.string "value"
+  create_table "certificates", force: :cascade do |t|
+    t.integer "organisation_id"
+    t.string "purpose"
+    t.string "usage"
+    t.string "ssa_id"
+    t.string "signed_certificate"
+    t.string "public_key"
+    t.string "private_key"
+    t.boolean "revoked", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "signed_certificate"
-    t.integer "organisation_id"
-    t.index ["organisation_id"], name: "index_csr_pems_on_organisation_id"
+    t.index ["organisation_id"], name: "index_certificates_on_organisation_id"
   end
 
   create_table "keys", force: :cascade do |t|
@@ -30,7 +35,7 @@ ActiveRecord::Schema.define(version: 2019_11_05_191953) do
 
   create_table "organisations", force: :cascade do |t|
     t.string "organisation_id"
-    t.string "type"
+    t.string "org_type"
     t.string "access_token"
     t.boolean "revoked", default: false, null: false
     t.datetime "created_at", null: false

@@ -3,23 +3,29 @@ Rails.application.routes.draw do
 
   root 'ssa#index'
 
-  post '/client-csr', to: 'csr#register'
+  post '/organisation/:organisation_type', to: 'organisation#register'
 
-  get '/certificate/:client_id', to: 'csr#mtls_and_signing_certificate'
+  post '/client-csr', to: 'certificate#generate'
+
+  get '/certificate/transport/:client_id', to: 'certificate#directory_transport_cert'
 
   post '/token', to: 'token#make_token'
 
-  get '/generate/organisation/:name/ssa/:ssa_id', to: 'ssa#generate'
+  get '/organisation/:organisation_type/:organisation_id/software-statement', to: 'ssa#generate'
+
+  get '/organisation/:organisation_type/:organisation_id/software-statement/:ssa_id/certificates', to: 'ssa#get_certificates'
+
+  get '/organisation/:organisation_type/:organisation_id/software-statement/:ssa_id/software-statement-assertion', to: 'ssa#get_ssa'
 
   get '/authorization-servers', to: 'authorization_servers#return_uris'
 
   post '/onboard', to: 'onboard#confirm'
 
-  get '/jwk-uri/organisation/:name', to: 'jwk_uri#get_org_public_key'
-
-  get '/jwk-uri/software/:ssa_id', to: 'jwk_uri#get_software_public_key'
-
   get '/revoked/organisation/:name', to: 'revoked#revoked_organisation'
 
   get '/revoked/software/:ssa_id', to: 'revoked#revoked_software'
+
+  get '/organisation/:organisation_type/:organisation_id/certificates', to: 'organisation#certificates'
+
+  get '/directory/:ssa_id/key', to: 'ssa#ssa_signing_public_key'
 end

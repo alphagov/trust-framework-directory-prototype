@@ -10,6 +10,10 @@ class Ssa < ApplicationRecord
     encode(jwt_claims, jwt_header)
   end
 
+  def certificates
+    Certificate.where(ssa_id: self.ssa_id)
+  end
+
 private
 
   def jwt_header
@@ -58,7 +62,13 @@ private
   end
 
   def org_jwks_uri
-    File.join(base_url, 'jwk-uri', 'organisation', organisation.organisation_id)
+    File.join(
+      base_url,
+      'organisation',
+      organisation.org_type,
+      organisation.organisation_id,
+      'certificates'
+    )
   end
 
   def org_revoked_uri
@@ -66,7 +76,15 @@ private
   end
 
   def software_uri
-    File.join(base_url, 'jwk-uri', 'software', ssa_id)
+    File.join(
+      base_url,
+      'organisation',
+      organisation.org_type,
+      organisation.organisation_id,
+      'software-statement',
+      ssa_id,
+      'certificates'
+    )
   end
 
   def software_revoked_uri
