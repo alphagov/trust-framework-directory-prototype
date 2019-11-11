@@ -1,6 +1,10 @@
 class OrganisationController < ApplicationController
   def register
-    Organisation.create(organisation_id: params[:client_id], org_type: 'service')
+    Organisation.create(
+      organisation_id: params[:client_id],
+      org_type: params[:organisation_type],
+      loa: params[:loa]
+    )
   end
 
   def certificates
