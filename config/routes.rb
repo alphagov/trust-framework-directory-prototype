@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   post '/organisation/:organisation_type', to: 'organisation#register'
 
+  get '/organisation/:organisation_type', to: 'organisation#list_orgs'
+
   post '/client-csr', to: 'certificate#generate'
 
   get '/certificate/transport/:client_id', to: 'certificate#directory_transport_cert'
