@@ -6,8 +6,8 @@ class OrganisationController < ApplicationController
   def certificates
     org = Organisation.find_by_organisation_id(params[:organisation_id])
     render json: {
-      "signing": org.signing_cert.signed_certificate,
-      "transport": org.transport_cert.signed_certificate
+      "signing": org.signing_cert.public_key,
+      "transport": org.transport_cert.public_key
     }
   end
 
