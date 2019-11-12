@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_08_111932) do
+ActiveRecord::Schema.define(version: 2019_11_11_155814) do
 
   create_table "certificates", force: :cascade do |t|
     t.integer "organisation_id"
@@ -40,6 +40,9 @@ ActiveRecord::Schema.define(version: 2019_11_08_111932) do
     t.boolean "revoked", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "loa"
+    t.string "name"
+    t.string "domain"
   end
 
   create_table "ssas", force: :cascade do |t|

@@ -29,8 +29,8 @@ class SsaController < ApplicationController
     org = Organisation.find_by_organisation_id(params[:organisation_id])
     certs = org.ssa_certificates(params[:ssa_id])
     render json: {
-      "signing": certs.where(usage: 'signing').first.signed_certificate,
-      "transport": certs.where(usage: 'transport').first.signed_certificate
+      "signing": certs.where(usage: 'signing').first.public_key,
+      "transport": certs.where(usage: 'transport').first.public_key
     }
   end
 
