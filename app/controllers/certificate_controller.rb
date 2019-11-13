@@ -11,7 +11,10 @@ class CertificateController < ApplicationController
   def directory_transport_cert
     organisation = Organisation.find_by_organisation_id(params[:client_id])
     org_cert = organisation.certificates.find { |cert| cert.usage == 'transport' }
-    render json: { "certificate": org_cert.signed_certificate }
+    render json: {
+      "certificate": org_cert.signed_certificate,
+      "private_key": org_cert.private_key
+    }
   end
 
 private
