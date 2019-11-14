@@ -38,7 +38,7 @@ private
       usage: 'transport',
       organisation_id: organisation.id,
       ssa_id: purpose == 'software' ? params[:ssa_id] : '',
-      signed_certificate: pki.sign(transport_cert).to_pem,
+      signed_certificate: transport_cert.to_pem,
       public_key: public_key.to_pem,
       private_key: private_key.to_pem
     )
