@@ -5,8 +5,8 @@ require 'base64'
 class Pki
   attr_reader :root_ca, :root_key, :ocsp_host
 
-  def initialize(_type = :RSA, cn = SecureRandom.alphanumeric, ocsp_host = "http://the-future.gov.uk")
-    @root_ca = generate_root_certificate(cn)
+  def initialize(_type = :RSA, cn = 'Trust Framework', ocsp_host = "http://the-future.gov.uk")
+    @root_ca = load_root_ca(cn)
     @revoked_certificates = {}
     @ocsp_host = URI(ocsp_host)
   end
@@ -49,7 +49,7 @@ class Pki
   end
 
   def sign(cert, digest: 'SHA256')
-    cert.issuer = @root_ca.subject # root CA is the issuer
+    cert.issuer = root_ca.subject # root CA is the issuer
     cert.serial = take_next_serial
     ef = OpenSSL::X509::ExtensionFactory.new
     ef.subject_certificate = cert
@@ -117,5 +117,22 @@ class Pki
     cert.not_before = Time.now - 5.years
     cert.not_after = Time.now + expires_in
     [cert, key.public_key, key]
+  end
+
+  def load_root_ca(cn)
+    cert = Certificate.where(purpose: 'root').first
+
+    if cert.nil?
+      cert = Certificate.create(
+        purpose: 'root',
+        usage: 'signing',
+        signed_certificate: generate_root_certificate(cn).to_pem,
+        private_key: @root_key.to_s
+      )
+    else
+      @root_key = OpenSSL::PKey::RSA.new(cert.private_key)
+    end
+
+    OpenSSL::X509::Certificate.new(cert.signed_certificate)
   end
 end
