@@ -5,7 +5,7 @@ require 'base64'
 class Pki
   attr_reader :root_ca, :root_key, :ocsp_host
 
-  def initialize(_type = :RSA, cn = "The Future", ocsp_host = "http://the-future.gov.uk")
+  def initialize(_type = :RSA, cn = SecureRandom.alphanumeric, ocsp_host = "http://the-future.gov.uk")
     @root_ca = generate_root_certificate(cn)
     @revoked_certificates = {}
     @ocsp_host = URI(ocsp_host)
@@ -16,7 +16,9 @@ class Pki
     root_ca = OpenSSL::X509::Certificate.new
     root_ca.version = 2 # cf. RFC 5280 - to make it a "v3" certificate
     root_ca.serial = take_next_serial
-    root_ca.subject = OpenSSL::X509::Name.parse "/DC=org/DC=TEST/CN=#{cn}"
+    root_ca.subject = OpenSSL::X509::Name.parse(
+      "/DC=#{SecureRandom.alphanumeric}/DC=#{SecureRandom.alphanumeric}/CN=#{cn}"
+    )
     root_ca.issuer = root_ca.subject # root CA's are "self-signed"
     root_ca.public_key = @root_key.public_key
     root_ca.not_before = Time.now
