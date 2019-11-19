@@ -31,5 +31,7 @@ Rails.application.routes.draw do
 
   get '/organisation/:organisation_type/:organisation_id/certificates', to: 'organisation#certificates'
 
-  get '/directory/:ssa_id/key', to: 'ssa#ssa_signing_public_key'
+  get '/directory/:ssa_id/key', to: 'directory#ssa_signing_public_key'
+
+  get '/directory/root-ca', to: 'directory#root_ca'
 end
