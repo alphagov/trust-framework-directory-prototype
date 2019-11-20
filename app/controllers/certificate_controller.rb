@@ -31,16 +31,15 @@ private
       signed_certificate: pki.sign(signing_cert).to_pem,
       public_key: signing_cert.public_key.to_pem
     )
-
-    transport_cert, public_key, private_key = pki.generate_signed_rsa_cert_and_key
+    
+    transport_cert = pki.csr_to_cert(params[:csr_pem])
     Certificate.create(
       purpose: purpose,
       usage: 'transport',
       organisation_id: organisation.id,
       ssa_id: purpose == 'software' ? params[:ssa_id] : '',
-      signed_certificate: transport_cert.to_pem,
-      public_key: public_key.to_pem,
-      private_key: private_key.to_pem
+      signed_certificate: pki.sign(transport_cert).to_pem,
+      public_key: transport_cert.public_key.to_pem,
     )
   end
 end
