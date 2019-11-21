@@ -9,8 +9,6 @@ Rails.application.routes.draw do
 
   post '/client-csr', to: 'certificate#generate'
 
-  get '/certificate/transport/:client_id', to: 'certificate#directory_transport_cert'
-
   post '/token', to: 'token#make_token'
 
   get '/organisation/:organisation_type/:organisation_id/software-statement', to: 'ssa#generate'
