@@ -1,16 +1,24 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-
+  ## Misc directory specific endpoints.
   root 'ssa#index'
 
-  post '/organisation/:organisation_type', to: 'organisation#register'
+  get '/directory/:ssa_id/key', to: 'directory#ssa_signing_public_key'
 
-  get '/organisation/:organisation_type', to: 'organisation#list_orgs'
+  get '/directory/root-ca', to: 'directory#root_ca'
+
+
+  ## Specifically for the onboarding app only
+  post '/organisation/:organisation_type', to: 'organisation#register'
 
   post '/client-csr', to: 'certificate#generate'
 
   post '/token', to: 'token#make_token'
 
+  post '/onboard', to: 'onboard#confirm' # Probably not necessary anymore
+
+
+  ## Some of the open banking directory API endpoints. Ish
+  ## https://github.com/OpenBankingUK/directory-api-specs/blob/master/directory-api-swagger.yaml
   get '/organisation/:organisation_type/:organisation_id/software-statement', to: 'ssa#generate'
 
   get '/organisation/:organisation_type/:organisation_id/certificate/:certificate_type', to: 'organisation#get_certificate'
@@ -21,15 +29,11 @@ Rails.application.routes.draw do
 
   get '/authorization-servers', to: 'authorization_servers#return_uris'
 
-  post '/onboard', to: 'onboard#confirm'
-
   get '/revoked/organisation/:name', to: 'revoked#revoked_organisation'
 
   get '/revoked/software/:ssa_id', to: 'revoked#revoked_software'
 
   get '/organisation/:organisation_type/:organisation_id/certificates', to: 'organisation#certificates'
 
-  get '/directory/:ssa_id/key', to: 'directory#ssa_signing_public_key'
-
-  get '/directory/root-ca', to: 'directory#root_ca'
+  get '/organisation/:organisation_type', to: 'organisation#list_orgs'
 end
