@@ -5,6 +5,12 @@ class Ssa < ApplicationRecord
 
   include JwtAud
 
+  CERTIFICATES = 'certificates'.freeze
+  ORGANISATION = 'organisation'.freeze
+  REVOKED = 'revoked'.freeze
+  SOFTWARE = 'software'.freeze
+  SOFTWARE_STATEMENT = "#{SOFTWARE}-statement".freeze
+
   def generate
     Key.create(jwk_id: ssa_id, public_key: rsa_public.to_s)
     encode(jwt_claims, jwt_header)
@@ -64,31 +70,31 @@ private
   def org_jwks_uri
     File.join(
       base_url,
-      'organisation',
+      ORGANISATION,
       organisation.org_type,
       organisation.organisation_id,
-      'certificates'
+      CERTIFICATES
     )
   end
 
   def org_revoked_uri
-    File.join(base_url, 'revoked', 'organisation', organisation.organisation_id)
+    File.join(base_url, REVOKED, ORGANISATION, organisation.organisation_id)
   end
 
   def software_uri
     File.join(
       base_url,
-      'organisation',
+      ORGANISATION,
       organisation.org_type,
       organisation.organisation_id,
-      'software-statement',
+      SOFTWARE_STATEMENT,
       ssa_id,
-      'certificates'
+      CERTIFICATES
     )
   end
 
   def software_revoked_uri
-    File.join(base_url, 'revoked', 'software', ssa_id)
+    File.join(base_url, REVOKED, SOFTWARE, ssa_id)
   end
 
   def base_url
