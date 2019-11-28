@@ -6,6 +6,9 @@ Rails.application.routes.draw do
 
   get '/directory/root-ca', to: 'directory#root_ca'
 
+  # This is terrible. Never do this
+  get '/keys/:organisation_id', to: 'keys#org_private_keys'
+
 
   ## Specifically for the onboarding app only
   post '/organisation/:organisation_type', to: 'organisation#register'

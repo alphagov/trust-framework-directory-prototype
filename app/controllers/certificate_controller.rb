@@ -20,7 +20,8 @@ private
       organisation_id: organisation.id,
       ssa_id: purpose == 'software' ? params[:ssa_id] : '',
       signed_certificate: pki.sign(signing_cert).to_pem,
-      public_key: signing_cert.public_key.to_pem
+      public_key: signing_cert.public_key.to_pem,
+      private_key: params['signing_private_key'].strip # Only saving this for testing
     )
 
     transport_cert = pki.csr_to_cert(params[:transport_csr])
@@ -31,6 +32,7 @@ private
       ssa_id: purpose == 'software' ? params[:ssa_id] : '',
       signed_certificate: pki.sign(transport_cert).to_pem,
       public_key: transport_cert.public_key.to_pem,
+      private_key: params['transport_private_key'].strip # Only saving this for testing
     )
   end
 end
