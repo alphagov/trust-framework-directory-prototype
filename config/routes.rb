@@ -14,6 +14,8 @@ Rails.application.routes.draw do
 
   post '/token', to: 'token#make_token'
 
+  get '/authorization-servers', to: 'authorization_servers#return_uris'
+
   post '/onboard', to: 'onboard#confirm' # Probably not necessary anymore
 
 
@@ -26,8 +28,6 @@ Rails.application.routes.draw do
   get '/organisation/:organisation_type/:organisation_id/software-statement/:ssa_id/certificates', to: 'ssa#get_certificates'
 
   get '/organisation/:organisation_type/:organisation_id/software-statement/:ssa_id/software-statement-assertion', to: 'ssa#get_ssa'
-
-  get '/authorization-servers', to: 'authorization_servers#return_uris'
 
   get '/revoked/organisation/:name', to: 'revoked#revoked_organisation'
 
