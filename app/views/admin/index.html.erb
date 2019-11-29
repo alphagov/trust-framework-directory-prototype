@@ -1,0 +1,42 @@
+<h1>Brokers and IDPs</h1>
+
+<form accept-charset="UTF-8" action="/admin/delete" method="post">
+  <h2>Brokers</h2>
+  <% if @brokers.empty? %>
+    <div><p>No Brokers</p></div>
+  <% else %>
+    <% @brokers.each do |broker| %>
+    <div>
+      <label>
+        <p>
+          <input type="radio" name="broker" id="<%= broker.name %>" value="<%= broker.id %>">
+            <strong>Name:</strong> <%= broker.name %> | <strong>Domain:</strong> <%= broker.domain %>
+        </p>
+      </label>
+    </div>
+    <% end %>
+  <% end %>
+  <br>
+  <h2>IDPs</h2>
+  <% if @idps.empty? %>
+    <div><p>No IDPs</p></div>
+  <% else %>
+    <% @idps.each do |idp| %>
+    <div>
+      <label>
+        <p>
+          <input type="radio" name="idp" id="<%= idp.name %>" value="<%= idp.id %>">
+            <strong>Name:</strong> <%= idp.name %> | <strong>Domain:</strong> <%= idp.domain %>
+        </p>
+      </label>
+    </div>
+    <% end %>
+  <% end %>
+  <br>
+  <br>
+  <p><input type="submit" size="50" value="Delete Selected"></p>
+  <br>
+  <h3>Danger Zone!!</h3>
+  <p><%= link_to "Delete all Brokers", delete_organisations_path('broker') %></p>
+  <p><%= link_to "Delete all IDPs", delete_organisations_path('idp') %></p>
+</form>

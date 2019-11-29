@@ -2,6 +2,9 @@ class Organisation < ApplicationRecord
   has_many :certificates
   has_many :ssas
 
+  scope :brokers, -> { where(org_type: 'broker') }
+  scope :idps, -> { where(org_type: 'idp') }
+
   def signing_cert
     certificates.where(usage: 'signing', purpose: 'organisation').first
   end

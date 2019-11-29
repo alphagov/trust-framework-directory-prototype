@@ -2,6 +2,12 @@ Rails.application.routes.draw do
   ## Misc directory specific endpoints.
   root 'ssa#index'
 
+  get '/admin', to: 'admin#index'
+
+  post '/admin/delete', to: 'admin#delete_selected'
+
+  get '/admin/delete/:organisation_type', to: 'admin#delete_by_org_type', as: :delete_organisations
+
   get '/directory/:ssa_id/key', to: 'directory#ssa_signing_public_key'
 
   get '/directory/root-ca', to: 'directory#root_ca'
