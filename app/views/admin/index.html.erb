@@ -37,6 +37,12 @@
   <p><input type="submit" size="50" value="Delete Selected"></p>
   <br>
   <h3>Danger Zone!!</h3>
-  <p><%= link_to "Delete all Brokers", delete_organisations_path('broker') %></p>
-  <p><%= link_to "Delete all IDPs", delete_organisations_path('idp') %></p>
+  <p>
+    <%= link_to "Delete all Brokers", delete_organisations_path('broker'),
+      data: { confirm: "Are you sure? There are no take backs!" } %>
+  </p>
+  <p>
+    <%= link_to "Delete all IDPs", delete_organisations_path('idp'),
+      data: { confirm: "Are you sure? There are no take backs!" } %>
+  </p>
 </form>
