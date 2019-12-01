@@ -2,6 +2,8 @@
 applications:
 - name: directory-prototype
   buildpack: https://github.com/cloudfoundry/ruby-buildpack.git
-  command: bundle exec rails db:migrate && bundle exec rails s
+  command: bundle exec rails db:migrate && bundle exec rails assets:precompile && bundle exec rails s
   services:
-   - directory-db
+    - directory-db
+  env:
+    - RAILS_ENV: production
