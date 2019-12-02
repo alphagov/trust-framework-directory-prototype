@@ -6,4 +6,4 @@ applications:
   services:
     - directory-db
   env:
-    - RAILS_ENV: production
+    RAILS_ENV: production
