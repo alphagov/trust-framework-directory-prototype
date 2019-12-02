@@ -19,7 +19,7 @@ class OrganisationController < ApplicationController
 
   def get_certificate
     org = Organisation.find_by_organisation_id(params[:organisation_id])
-    cert = org.public_send("#{params[:certificate_type]}_certificate").signed_certificate
+    cert = org.public_send("#{params[:certificate_type]}_cert").signed_certificate
     render json: { "#{params[:certificate_type]}": cert }
   end
 
