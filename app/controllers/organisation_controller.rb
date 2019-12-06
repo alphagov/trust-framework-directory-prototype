@@ -5,7 +5,8 @@ class OrganisationController < ApplicationController
       organisation_id: params[:client_id],
       org_type: params[:organisation_type],
       domain: params[:domain],
-      loa: params[:loa]
+      loa: params[:loa],
+      scheme: params[:scheme]
     )
   end
 
@@ -24,15 +25,26 @@ class OrganisationController < ApplicationController
   end
 
   def list_orgs
-    orgs = Organisation.where(org_type: params[:organisation_type], revoked: false).map do |org|
+    if params[:organisation_type] == 'broker'
+      # When a broker makes a request for a list of brokers we only want to return
+      # a list of brokers which are in a different scheme
+      orgs = Organisation.brokers.where.not(scheme: params[:scheme])
+    else
+      # When a broker makes a request for a list of IDPs we only want to return
+      # a list of IDPs which are in the same scheme
+      orgs = Organisation.idps.where(scheme: params[:scheme])
+    end
+
+    orgs_for_type = orgs.map do |org|
       {
         name: org.name,
         type: org.org_type,
         domain: org.domain,
-        loa: org.loa
+        loa: org.loa,
+        scheme: org.scheme
       }
     end
 
-    render json: orgs
+    render json: orgs_for_type
   end
 end

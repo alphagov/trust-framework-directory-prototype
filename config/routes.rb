@@ -44,5 +44,5 @@ Rails.application.routes.draw do
 
   get '/organisation/:organisation_type/:organisation_id/certificates', to: 'organisation#certificates'
 
-  get '/organisation/:organisation_type', to: 'organisation#list_orgs'
+  get '/organisation/:organisation_type/:scheme', to: 'organisation#list_orgs'
 end
