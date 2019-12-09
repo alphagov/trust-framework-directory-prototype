@@ -16,4 +16,8 @@ class Organisation < ApplicationRecord
   def ssa_certificates(ssa_id)
     certificates.where(ssa_id: ssa_id, purpose: 'software')
   end
+
+  def ssa_id
+    ssas.first&.ssa_id
+  end
 end

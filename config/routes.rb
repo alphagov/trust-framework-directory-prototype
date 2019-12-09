@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   get '/admin', to: 'admin#index'
 
-  post '/admin/delete', to: 'admin#delete_selected'
+  get '/admin/delete/:org_id', to: 'admin#delete_selected'
 
   get '/admin/delete/:organisation_type', to: 'admin#delete_by_org_type', as: :delete_organisations
 
