@@ -1,12 +1,15 @@
 Rails.application.routes.draw do
+  ## Admin
+  get '/admin/delete/organisation/:org_id', to: 'admin#delete_selected'
+
+  get '/admin/delete/:organisation_type', to: 'admin#delete_by_org_type', as: :delete_organisations
+
+  get '/admin/details/:org_id', to: 'admin#ssa_and_keys'
+
   ## Misc directory specific endpoints.
   root 'ssa#index'
 
   get '/admin', to: 'admin#index'
-
-  get '/admin/delete/organisation/:org_id', to: 'admin#delete_selected'
-
-  get '/admin/delete/:organisation_type', to: 'admin#delete_by_org_type', as: :delete_organisations
 
   get '/directory/:ssa_id/key', to: 'directory#ssa_signing_public_key'
 

@@ -9,6 +9,14 @@
   </div>
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">
+      ID
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= org.organisation_id %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
       Domain
     </dt>
     <dd class="govuk-summary-list__value">
@@ -32,5 +40,6 @@
     </dd>
   </div>
 </dl>
-<a class="govuk-button govuk-button--warning" role="button" href="/admin/delete/organisation/<%= org.id %>">Delete <%= org.name %></a>
+<a class="govuk-button govuk-button govuk-!-margin-right-2" role="button" href="/admin/details/<%= org.id %>">Show SSA and Keys</a>
+<a class="govuk-button govuk-button--warning" role="button" href="/admin/delete/organisation/<%= org.id %>">Delete</a>
 <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-2">

@@ -26,4 +26,15 @@ class AdminController < ApplicationController
 
     redirect_to :admin
   end
+
+  def ssa_and_keys
+    @org = Organisation.find_by_id(params[:org_id])
+
+    if @org
+      render :organisation_details
+    else
+      flash[:error] = "Organisation with ID '#{params[:org_id]}' does not exist"
+      redirect_to :admin
+    end
+  end
 end

@@ -1,0 +1,30 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="govuk-breadcrumbs">
+      <ol class="govuk-breadcrumbs__list">
+        <li class="govuk-breadcrumbs__list-item">
+          <a class="govuk-breadcrumbs__link" href="/admin">Back</a>
+        </li>
+      </ol>
+    </div>
+
+    <h1 class="govuk-heading-xl"><%= @org.name %></h1>
+    <div class="govuk-form-group">
+      <label class="govuk-label" for="ssa">Software Statement Assertion</label>
+      <textarea readonly="readonly" class="govuk-textarea" id="ssa" name="ssa" rows="20" aria-describedby="ssa"
+      value="" style="font-size: 13px;"><%= @org.ssas.first.statement %></textarea>
+    </div>
+
+    <div class="govuk-form-group">
+      <label class="govuk-label" for="ssa">Signing Private Key</label>
+      <textarea readonly="readonly" class="govuk-textarea" id="signing" name="signing" rows="30" aria-describedby="signing"
+      value="" style="font-size: 13px;"><%= @org.signing_cert.private_key %></textarea>
+    </div>
+
+    <div class="govuk-form-group">
+      <label class="govuk-label" for="ssa">Transport Private Key</label>
+      <textarea readonly="readonly" class="govuk-textarea" id="transport" name="transport" rows="30" aria-describedby="transport"
+      value="" style="font-size: 13px;"><%= @org.transport_cert.private_key %></textarea>
+    </div>
+  </div>
+</div>
