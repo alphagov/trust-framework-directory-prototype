@@ -53,7 +53,24 @@
     </div>
 </header>
 
-<%= yield %>
+<div class="govuk-width-container">
+  <main class="govuk-main-wrapper">
+    <% if flash.present? && (flash.keys & %w[error errors notice success warn alert]).size > 0 %>
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+          <% flash.each do |name, msg| -%>
+            <% if %w(error errors warn notice success alert).include?(name) %><%= msg %><% end %>
+          <% end -%>
+        </strong>
+      </div>
+    <% end %>
+
+    <%= yield %>
+
+  </main>
+</div>
+
 
 <footer class="govuk-footer " role="contentinfo">
     <div class="govuk-width-container ">

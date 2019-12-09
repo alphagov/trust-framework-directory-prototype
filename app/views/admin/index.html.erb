@@ -1,64 +1,49 @@
-<div class="govuk-width-container">
-  <main class="govuk-main-wrapper">
-    <% if flash.present? && (flash.keys & %w[error errors notice success warn alert]).size > 0 %>
-      <div class="govuk-warning-text">
-        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-        <strong class="govuk-warning-text__text">
-          <% flash.each do |name, msg| -%>
-            <% if %w(error errors warn notice success alert).include?(name) %><%= msg %><% end %>
-          <% end -%>
-        </strong>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl">Brokers and IDPs</h1>
+
+    <% @schemes.each do |scheme, org_hash| %>
+      <% next if scheme.nil? %>
+      <h2 class="govuk-heading-l">Scheme <%= scheme %></h2>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-half">
+          <h2 class="govuk-heading-m">Brokers</h2>
+          <hr class="govuk-section-break govuk-section-break--visible">
+          <% if org_hash["broker"].nil? %>
+            <p class="govuk-body govuk-!-margin-top-2">No Brokers</p>
+          <% else %>
+            <% org_hash["broker"].each do |org| %>
+              <%= render partial: 'shared/organisation', locals: { org: org } %>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="govuk-grid-column-one-half">
+          <h2 class="govuk-heading-m">IDPs</h2>
+          <hr class="govuk-section-break govuk-section-break--visible">
+          <% if org_hash["idp"].nil? %>
+            <p class="govuk-body govuk-!-margin-top-2">No IDPs</p>
+          <% else %>
+            <% org_hash["idp"].each do |org| %>
+              <%= render partial: 'shared/organisation', locals: { org: org } %>
+            <% end %>
+          <% end %>
+        </div>
       </div>
+      <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-2">
     <% end %>
+  </div>
+</div>
 
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-full">
-        <h1 class="govuk-heading-xl">Brokers and IDPs</h1>
-
-        <% @schemes.each do |scheme, org_hash| %>
-          <% next if scheme.nil? %>
-          <h2 class="govuk-heading-l">Scheme <%= scheme %></h2>
-          <div class="govuk-grid-row">
-            <div class="govuk-grid-column-one-half">
-              <h2 class="govuk-heading-m">Brokers</h2>
-              <hr class="govuk-section-break govuk-section-break--visible">
-              <% if org_hash["broker"].nil? %>
-                <p class="govuk-body govuk-!-margin-top-2">No Brokers</p>
-              <% else %>
-                <% org_hash["broker"].each do |org| %>
-                  <%= render partial: 'shared/organisation', locals: { org: org } %>
-                <% end %>
-              <% end %>
-            </div>
-            <div class="govuk-grid-column-one-half">
-              <h2 class="govuk-heading-m">IDPs</h2>
-              <hr class="govuk-section-break govuk-section-break--visible">
-              <% if org_hash["idp"].nil? %>
-                <p class="govuk-body govuk-!-margin-top-2">No IDPs</p>
-              <% else %>
-                <% org_hash["idp"].each do |org| %>
-                  <%= render partial: 'shared/organisation', locals: { org: org } %>
-                <% end %>
-              <% end %>
-            </div>
-          </div>
-          <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-2">
-        <% end %>
-      </div>
-    </div>
-
-    <div class="govuk-grid-row govuk-!-margin-top-5">
-      <div class="govuk-grid-column-full">
-        <h2 class="govuk-heading-l">Danger Zone!!</h2>
-        <p class="govuk-body">
-          <%= link_to "Delete all Brokers", delete_organisations_path('broker'),
-            class: "govuk-button govuk-button--warning", data: { confirm: "Are you sure? There are no take backs!" } %>
-        </p>
-        <p class="govuk-body">
-          <%= link_to "Delete all IDPs", delete_organisations_path('idp'),
-            class: "govuk-button govuk-button--warning", data: { confirm: "Are you sure? There are no take backs!" } %>
-        </p>
-      </div>
-    </div>
-  </main>
+<div class="govuk-grid-row govuk-!-margin-top-5">
+  <div class="govuk-grid-column-full">
+    <h2 class="govuk-heading-l">Danger Zone!!</h2>
+    <p class="govuk-body">
+      <%= link_to "Delete all Brokers", delete_organisations_path('broker'),
+        class: "govuk-button govuk-button--warning", data: { confirm: "Are you sure? There are no take backs!" } %>
+    </p>
+    <p class="govuk-body">
+      <%= link_to "Delete all IDPs", delete_organisations_path('idp'),
+        class: "govuk-button govuk-button--warning", data: { confirm: "Are you sure? There are no take backs!" } %>
+    </p>
+  </div>
 </div>
