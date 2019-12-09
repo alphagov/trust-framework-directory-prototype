@@ -1,0 +1,36 @@
+ <dl class="govuk-summary-list govuk-summary-list--no-border">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Name
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= org.name %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Domain
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= org.domain %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      SSA ID
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= org.ssa_id %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Level of Assurance
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= org.loa %>
+    </dd>
+  </div>
+</dl>
+<a class="govuk-button govuk-button--warning" role="button" href="/admin/delete/organisation/<%= org.id %>">Delete <%= org.name %></a>
+<hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-2">
