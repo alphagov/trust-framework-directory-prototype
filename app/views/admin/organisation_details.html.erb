@@ -12,12 +12,7 @@
     <div class="govuk-form-group">
       <label class="govuk-label" for="ssa">Software Statement Assertion</label>
       <textarea readonly="readonly" class="govuk-textarea" id="ssa" name="ssa" rows="20" aria-describedby="ssa"
-      value="" style="font-size: 13px;">
-        <% if @org.ssas.first.nil? %>
-          No Software Statement Assertion exists for this organisation. Please delete this organisation and register another one.
-        <% else %>
-          <%= @org.ssas.first.statement %>
-        <% end %>
+      value="" style="font-size: 13px;"><% if @org.ssas.first.nil? %>No Software Statement Assertion exists for this organisation. Please delete this organisation and register another one.<% else %><%= @org.ssas.first.statement %><% end %>
       </textarea>
     </div>
 
