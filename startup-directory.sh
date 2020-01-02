@@ -13,4 +13,4 @@ else
 fi
 
 bin/rails db:migrate
-bin/rails s
+bin/rails s -d --pid `pwd`/tmp/pids/directory.pid
