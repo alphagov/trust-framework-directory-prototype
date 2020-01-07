@@ -6,6 +6,12 @@ bundle check || bundle install
 yarn check || yarn install
 
 DEV_DB=`pwd`/db/development.sqlite3
+
+if [ -f "./tmp/pids/directory.pid" ]; then
+echo -e "About to kill Directory before starting again"
+$(pwd)/kill-directory.sh
+fi
+
 if [ -f "$DEV_DB" ]; then
     echo "$DEV_DB already exists"
 else
