@@ -37,6 +37,10 @@ Rails.application.routes.draw do
 
   get '/organisation/:organisation_type/:organisation_id/certificate/:certificate_type', to: 'organisation#get_certificate'
 
+  get '/organisation/:organisation_type/:organisation_id/image', to: 'organisation#get_decoded_image'
+
+  get '/organisation/:organisation_type/scheme/:scheme/image', to: 'organisation#get_decoded_image_by_scheme'
+
   get '/organisation/:organisation_type/:organisation_id/software-statement/:ssa_id/certificates', to: 'ssa#get_certificates'
 
   get '/organisation/:organisation_type/:organisation_id/software-statement/:ssa_id/software-statement-assertion', to: 'ssa#get_ssa'

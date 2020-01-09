@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_06_150030) do
+ActiveRecord::Schema.define(version: 2020_01_10_095205) do
 
   create_table "certificates", force: :cascade do |t|
     t.integer "organisation_id"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 2019_12_06_150030) do
     t.string "name"
     t.string "domain"
     t.string "scheme"
+    t.string "brand_image"
   end
 
   create_table "ssas", force: :cascade do |t|

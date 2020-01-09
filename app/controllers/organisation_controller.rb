@@ -6,6 +6,7 @@ class OrganisationController < ApplicationController
       org_type: params[:organisation_type],
       domain: params[:domain],
       loa: params[:loa],
+      brand_image: params[:brand_image],
       scheme: params[:scheme]
     )
   end
@@ -16,6 +17,16 @@ class OrganisationController < ApplicationController
       "signing": org.signing_cert.signed_certificate,
       "transport": org.transport_cert.signed_certificate
     }
+  end
+
+  def get_decoded_image
+    org = Organisation.find_by_organisation_id(params[:organisation_id])
+    send_data Base64.decode64(org.brand_image), :type => "image/svg+xml", :disposition => 'inline'
+  end
+
+  def get_decoded_image_by_scheme
+    org = Organisation.find_by(org_type: 'broker', scheme: params[:scheme])
+    send_data Base64.decode64(org.brand_image), :type => "image/svg+xml", :disposition => 'inline'
   end
 
   def get_certificate
@@ -41,7 +52,8 @@ class OrganisationController < ApplicationController
         type: org.org_type,
         domain: org.domain,
         loa: org.loa,
-        scheme: org.scheme
+        scheme: org.scheme,
+        id: org.organisation_id
       }
     end
 
