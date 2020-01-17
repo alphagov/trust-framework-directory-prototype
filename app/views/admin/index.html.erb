@@ -6,7 +6,7 @@
       <% next if scheme.nil? %>
       <h2 class="govuk-heading-l">Scheme <%= scheme %></h2>
       <div class="govuk-grid-row">
-        <div class="govuk-grid-column-one-half">
+        <div class="govuk-grid-column-one-third">
           <h2 class="govuk-heading-m">Brokers</h2>
           <hr class="govuk-section-break govuk-section-break--visible">
           <% if org_hash["broker"].nil? %>
@@ -17,13 +17,24 @@
             <% end %>
           <% end %>
         </div>
-        <div class="govuk-grid-column-one-half">
+        <div class="govuk-grid-column-one-third">
           <h2 class="govuk-heading-m">IDPs</h2>
           <hr class="govuk-section-break govuk-section-break--visible">
           <% if org_hash["idp"].nil? %>
             <p class="govuk-body govuk-!-margin-top-2">No IDPs</p>
           <% else %>
             <% org_hash["idp"].each do |org| %>
+              <%= render partial: 'shared/organisation', locals: { org: org } %>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="govuk-grid-column-one-third">
+          <h2 class="govuk-heading-m">RPs</h2>
+          <hr class="govuk-section-break govuk-section-break--visible">
+          <% if org_hash["rp"].nil? %>
+            <p class="govuk-body govuk-!-margin-top-2">No RPs</p>
+          <% else %>
+            <% org_hash["rp"].each do |org| %>
               <%= render partial: 'shared/organisation', locals: { org: org } %>
             <% end %>
           <% end %>
@@ -43,6 +54,10 @@
     </p>
     <p class="govuk-body">
       <%= link_to "Delete all IDPs", delete_organisations_path('idp'),
+        class: "govuk-button govuk-button--warning", data: { confirm: "Are you sure? There are no take backs!" } %>
+    </p>
+    <p class="govuk-body">
+      <%= link_to "Delete all RPs", delete_organisations_path('rp'),
         class: "govuk-button govuk-button--warning", data: { confirm: "Are you sure? There are no take backs!" } %>
     </p>
   </div>
