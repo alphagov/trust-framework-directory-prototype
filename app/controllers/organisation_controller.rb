@@ -40,6 +40,11 @@ class OrganisationController < ApplicationController
       # When a broker makes a request for a list of brokers we only want to return
       # a list of brokers which are in a different scheme
       orgs = Organisation.brokers.where.not(scheme: params[:scheme])
+    elsif params[:organisation_type] == 'rp'
+      # When an RP makes a request for a list of brokers we only want to return
+      # a list of brokers which are in the same scheme. There should only ever be
+      # one. Maybe.
+      orgs = Organisation.brokers.where(scheme: params[:scheme])
     else
       # When a broker makes a request for a list of IDPs we only want to return
       # a list of IDPs which are in the same scheme
