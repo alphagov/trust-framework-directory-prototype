@@ -6,6 +6,7 @@ class Ssa < ApplicationRecord
   include JwtAud
 
   CERTIFICATES = 'certificates'.freeze
+  IMAGE = 'image'.freeze
   ORGANISATION = 'organisation'.freeze
   REVOKED = 'revoked'.freeze
   SOFTWARE = 'software'.freeze
@@ -55,7 +56,7 @@ private
       "software_id": SecureRandom.uuid,
       "software_jwks_endpoint": software_uri,
       "software_jwks_revoked_endpoint": software_revoked_uri,
-      "software_logo_uri": "#{base_url}/logo.jpg",
+      "software_logo_uri": logo_uri,
       "software_redirect_uris": [
         "#{base_url}/redirect"
       ],
@@ -90,6 +91,16 @@ private
       SOFTWARE_STATEMENT,
       ssa_id,
       CERTIFICATES
+    )
+  end
+
+  def logo_uri
+    File.join(
+      base_url,
+      ORGANISATION,
+      organisation.org_type,
+      organisation.organisation_id,
+      IMAGE
     )
   end
 
