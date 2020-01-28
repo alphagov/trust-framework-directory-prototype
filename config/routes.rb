@@ -26,6 +26,8 @@ Rails.application.routes.draw do
 
   post '/token', to: 'token#make_token'
 
+  post '/verify-client-token', to: 'token#verify_token'
+
   get '/authorization-servers', to: 'authorization_servers#return_uris'
 
   post '/onboard', to: 'onboard#confirm' # Probably not necessary anymore

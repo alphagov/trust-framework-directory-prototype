@@ -5,11 +5,18 @@ class TokenController < ApplicationController
 
   def make_token
     access_token = encode(jwt_claims, jwt_header)
+    client_token = encode(jwt_claims, jwt_header)
     Organisation.find_by_organisation_id(params[:client_id]).tap do |org|
       org.access_token = access_token
+      org.client_token = client_token
       org.save!
     end
     render json: { "access_token": access_token }
+  end
+
+  def verify_token
+    client_token = params[:client_token]
+    render json: { organisation_id: Organisation.find_by_client_token(client_token)&.organisation_id }
   end
 
 private
