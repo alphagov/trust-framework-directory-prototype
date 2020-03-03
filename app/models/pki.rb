@@ -51,6 +51,7 @@ class Pki
   def sign(cert, digest: 'SHA256')
     cert.issuer = root_ca.subject # root CA is the issuer
     cert.serial = take_next_serial
+    cert.version = 2
     ef = OpenSSL::X509::ExtensionFactory.new
     ef.subject_certificate = cert
     ef.issuer_certificate = root_ca
@@ -111,7 +112,7 @@ class Pki
 
   def generate_cert_using_key(key, expires_in, cn)
     cert = OpenSSL::X509::Certificate.new
-    cert.version = 2
+    cert.version = 3
     cert.subject = OpenSSL::X509::Name.parse "/DC=org/DC=TEST/CN=#{cn}"
     cert.public_key = key.public_key
     cert.not_before = Time.now - 5.years
