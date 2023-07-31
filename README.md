@@ -1,5 +1,9 @@
 # trust-framework-directory-prototype
 
+>**GOV.UK Verify has closed**
+>
+>This repository is out of date and has been archived
+
 The Trust Framework Directory Prototype serves as a point of trust for Brokers. 
 
 ### The Directory responsibilities
